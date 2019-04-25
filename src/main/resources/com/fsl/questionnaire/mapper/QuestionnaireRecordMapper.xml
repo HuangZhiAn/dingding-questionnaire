@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fsl.questionnaire.mapper.QuestionnaireRecordMapper">
+    <resultMap id="BaseResultMap" type="com.fsl.questionnaire.dto.QuestionnaireRecord">
+        <result column="id" jdbcType="BIGINT" property="id" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="request_record" jdbcType="VARCHAR" property="requestRecord" />
+        <result column="operation_status" jdbcType="VARCHAR" property="operationStatus" />
+        <result column="qustion1" jdbcType="VARCHAR" property="qustion1" />
+        <result column="answer1" jdbcType="VARCHAR" property="answer1" />
+        <result column="qustion2" jdbcType="VARCHAR" property="qustion2" />
+        <result column="answer2" jdbcType="VARCHAR" property="answer2" />
+        <result column="qustion3" jdbcType="VARCHAR" property="qustion3" />
+        <result column="answer3" jdbcType="VARCHAR" property="answer3" />
+        <result column="qustion4" jdbcType="VARCHAR" property="qustion4" />
+        <result column="answer4" jdbcType="VARCHAR" property="answer4" />
+        <result column="qustion5" jdbcType="VARCHAR" property="qustion5" />
+        <result column="answer5" jdbcType="VARCHAR" property="answer5" />
+        <result column="operation_time" jdbcType="DATE" property="operationTime" />
+        <result column="created_by_user" jdbcType="VARCHAR" property="createdByUser" />
+        <result column="created_unit_code" jdbcType="VARCHAR" property="createdUnitCode" />
+        <result column="created_dept_code" jdbcType="VARCHAR" property="createdDeptCode" />
+        <result column="created_org" jdbcType="VARCHAR" property="createdOrg" />
+        <result column="creation_date" jdbcType="DATE" property="creationDate" />
+        <result column="last_updated_by_user" jdbcType="VARCHAR" property="lastUpdatedByUser" />
+        <result column="last_update_date" jdbcType="DATE" property="lastUpdateDate" />
+        <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
+        <result column="object_version_number" jdbcType="BIGINT" property="objectVersionNumber" />
+        <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+        <result column="last_updated_by" jdbcType="BIGINT" property="lastUpdatedBy" />
+        <result column="last_update_login" jdbcType="BIGINT" property="lastUpdateLogin" />
+        <result column="request_id" jdbcType="BIGINT" property="requestId" />
+        <result column="program_id" jdbcType="BIGINT" property="programId" />
+        <result column="attribute1" jdbcType="VARCHAR" property="attribute1" />
+        <result column="attribute2" jdbcType="VARCHAR" property="attribute2" />
+        <result column="attribute3" jdbcType="VARCHAR" property="attribute3" />
+        <result column="attribute4" jdbcType="VARCHAR" property="attribute4" />
+        <result column="attribute5" jdbcType="VARCHAR" property="attribute5" />
+        <result column="attribute6" jdbcType="VARCHAR" property="attribute6" />
+        <result column="attribute7" jdbcType="VARCHAR" property="attribute7" />
+        <result column="attribute8" jdbcType="VARCHAR" property="attribute8" />
+        <result column="attribute9" jdbcType="VARCHAR" property="attribute9" />
+        <result column="attribute10" jdbcType="VARCHAR" property="attribute10" />
+        <result column="attribute11" jdbcType="VARCHAR" property="attribute11" />
+        <result column="attribute12" jdbcType="VARCHAR" property="attribute12" />
+        <result column="attribute13" jdbcType="VARCHAR" property="attribute13" />
+        <result column="attribute14" jdbcType="VARCHAR" property="attribute14" />
+        <result column="attribute15" jdbcType="VARCHAR" property="attribute15" />
+    </resultMap>
+
+    <select id="selectQuestionnaireRecordById" resultMap="BaseResultMap" parameterType="com.fsl.questionnaire.dto.QuestionnaireRecord">
+        SELECT
+        ID,USER_ID,USER_NAME,REQUEST_RECORD,OPERATION_STATUS
+        FROM T_QUESTIONNAIRE_RECORD
+        <where>
+            <if test="id!=null">
+                ID=#{id}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertQuestionnaireRecord" parameterType="com.fsl.questionnaire.dto.QuestionnaireRecord">
+        INSERT INTO T_QUESTIONNAIRE_RECORD
+        (ID,USER_ID,USER_NAME,REQUEST_RECORD,OPERATION_STATUS,QUSTION1,ANSWER1
+        ,QUSTION2,ANSWER2,QUSTION3,ANSWER3,QUSTION4,ANSWER4,QUSTION5,ANSWER5,OPERATION_TIME,ATTRIBUTE1)
+         VALUES
+         (#{id},#{userId},#{userName},#{requestRecord},#{operationStatus},#{qustion1}
+         ,#{answer1},#{qustion2},#{answer2},#{qustion3},#{answer3},#{qustion4},#{answer4}
+         ,#{qustion5},#{answer5},#{operationTime},#{attribute1})
+    </insert>
+
+    <update id="updateQuestionnaireRecord" parameterType="com.fsl.questionnaire.dto.QuestionnaireRecord">
+        UPDATE T_QUESTIONNAIRE_RECORD set
+        <if test="operationStatus!=null">
+            operation_status =#{operationStatus} ,
+        </if>
+        <if test="qustion1!=null">
+            QUSTION1=#{qustion1},
+        </if>
+        <if test="answer1!=null">
+            ANSWER1=#{answer1},
+        </if>
+        <if test="qustion2!=null">
+            QUSTION2=#{qustion2},
+        </if>
+        <if test="answer2!=null">
+            ANSWER2=#{answer2},
+        </if>
+        <if test="qustion3!=null">
+            QUSTION3=#{qustion3},
+        </if>
+        <if test="answer3!=null">
+            ANSWER3=#{answer3},
+        </if>
+        <if test="qustion4!=null">
+            QUSTION4=#{qustion4},
+        </if>
+        <if test="answer4!=null">
+            ANSWER4=#{answer4},
+        </if>
+        <if test="qustion5!=null">
+            QUSTION5=#{qustion5},
+        </if>
+        <if test="answer5!=null">
+            ANSWER5=#{answer5},
+        </if>
+        ID=ID
+        where ID=#{id};
+    </update>
+
+    <select id="selectUncompleteRecord" resultMap="BaseResultMap" >
+        SELECT
+        qr.user_id,qr.id,qr.attribute1
+        FROM
+        t_questionnaire_record qr
+        WHERE
+        qr.operation_status = 'Y'
+        AND <![CDATA[
+                    qr.attribute1 < 4
+                ]]>
+    </select>
+
+    <update id="increaseSendMessageCount" parameterType="long">
+        UPDATE t_questionnaire_record qr
+        SET qr.attribute1 = qr.attribute1 + 1
+        WHERE
+            qr.id = #{id}
+    </update>
+
+    <select id="userExists" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            count(0)
+        FROM
+            t_questionnaire_record qr
+        WHERE
+            qr.user_id = #{userId}
+    </select>
+</mapper>
