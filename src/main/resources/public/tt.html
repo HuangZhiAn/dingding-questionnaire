@@ -15,10 +15,6 @@
 		//问卷ID，表示每份问卷
 		var pId = getUrlParam('pId');
 		console.log(pId);
-		if(pId === undefined||pId == ""){
-		    console.log(pId);
-		    window.close();
-		}
 		data['userId'] = userId;
 		data['pId'] = pId;
 		var inputs  = document.getElementsByTagName("input");
@@ -48,13 +44,11 @@
             success: function(res) {
 			    if(res!="S"){
 			        alert(res);
-            		$("#bodyhiden").css("display","none");
-            		$("#texthiden").css("display","inline-block");
 				}else{
             		alert("提交成功");
-            		$("#bodyhiden").css("display","none");
-            		$("#texthiden").css("display","inline-block");
 				}
+				$("#bodyhiden").css("display","none");
+                $("#texthiden").css("display","inline-block");
 			},
             fail: function(err) {
             	alert(err);
@@ -92,7 +86,7 @@
 	<div class="content container" id="bodyhiden">
 	<h3>钉钉办公协同工具使用问卷调查</h3>
 		<!--<p>本次调查以匿名方式投票</p>-->
-	 <div class="vote ">
+	 <div class="vote">
 	  <div class="votechoice">
 	   <ul class="vote1 list-unstyled">
 	    <p>1、在工作时间您更愿意使用哪种沟通协同工具：</p>

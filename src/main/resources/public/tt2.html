@@ -15,16 +15,13 @@
 		//问卷ID，表示每份问卷
 		var pId = getUrlParam('pId');
 		console.log(pId);
-		if(pId === undefined||pId == ""){
-		    console.log(pId);
-		    window.close();
-		}
 		data['userId'] = userId;
 		data['pId'] = pId;
 		var inputs  = document.getElementsByTagName("input");
 		var count=0;
 		for(var i = 0;i < inputs.length;i++){
-			if(inputs[i].checked){
+            //适配 IE
+            if($(inputs[i]).attr("checked")||$(inputs[i]).prop("checked")){
 				if(data["qa"][inputs[i].name] === undefined){
 					data["qa"][inputs[i].name]=inputs[i].value;
 				}else{
@@ -44,16 +41,15 @@
 			type:"POST",
 			url:"/saveData",
 			async:false,
-            success: (res) => {
+            success: function(res) {
 			    if(res!="S"){
 			        $("#labelInfo").text(res);
-			        $("#deleteButton").click();
 				}else{
 			        $("#labelInfo").text("提交成功");
-			        $("#deleteButton").click();
 				}
+				$("#deleteButton").click();
 			},
-            fail: (err) => {
+            fail: function(err) {
             	alert(err);
 			}
 		});
@@ -93,7 +89,6 @@
 <body>
 	<div class="content container" id="bodyhiden">
 	<h3>钉钉办公协同工具使用问卷调查</h3>
-		<p>本次调查以匿名方式投票</p>
 	 <div class="vote ">
 	  <div class="votechoice">
 	   <ul class="vote1 list-unstyled">
