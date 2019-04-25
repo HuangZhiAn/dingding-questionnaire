@@ -68,7 +68,7 @@ public class QuestionnaireRecord implements Serializable,Cloneable{
     private Long requestId ;
     /** 程序id */
     private Long programId ;
-    /**  */
+    /** 发送消息次数 */
     private String attribute1 ;
     /**  */
     private String attribute2 ;

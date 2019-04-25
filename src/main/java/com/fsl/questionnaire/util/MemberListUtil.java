@@ -15,7 +15,7 @@ import com.taobao.api.ApiException;
 import org.springframework.boot.json.GsonJsonParser;
 
 public class MemberListUtil {
-    //递归获取子部门下所有用户
+    //获取部门列表下所有用户
     public static List<User> getDepartmentUserIdWithName(List<Long> departmentIds) throws Exception {
         List<User> userList = new ArrayList<>();
         for (int i=0; i<departmentIds.size();i++){

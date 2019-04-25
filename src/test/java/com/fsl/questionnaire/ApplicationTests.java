@@ -1,5 +1,6 @@
 package com.fsl.questionnaire;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,9 +60,10 @@ public class ApplicationTests {
     @Test
     public void sendMessageToUser() {
         //MessageUtil.sendMessageToUser("061343005926696347","林锦洪",urlPrefix,questionnaireRecordMapper);
-        MessageUtil.sendMessageToUser("123061175039842902", "黄志安",urlPrefix,questionnaireRecordMapper);
+        //MessageUtil.sendMessageToUser("123061175039842902", "黄志安",urlPrefix,questionnaireRecordMapper);
         //MessageUtil.sendMessageToUser("025714173126259030", "柴部",urlPrefix,questionnaireRecordMapper);
         //sendMessageToUser("014575","卢科");
+        MessageUtil.sendMessage("123061175039842902","http://ddq.fslgz.com:8020/tt.html?pId=", "钉钉办公协同工具使用问卷调查",LocalDateTime.now().toString()+"\nIE无法提交问题已修复");
     }
 
     /**
@@ -151,5 +153,21 @@ public class ApplicationTests {
         int i = questionnaireRecordMapper.userExists("");
         System.out.println(i);
     }
+
+    /**
+     * 获取部门下所有人员测试
+     */
+    @Test
+    public void departmentUserIdWithName() {
+        try {
+            List<Long> department = MemberListUtil.getDepartment("112237951");
+            System.out.println("部门："+department);
+            List<User> departmentUserIdWithName = MemberListUtil.getDepartmentUserIdWithName(department);
+            System.out.println(departmentUserIdWithName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
