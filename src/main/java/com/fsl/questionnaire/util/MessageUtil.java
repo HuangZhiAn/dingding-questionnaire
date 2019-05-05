@@ -3,7 +3,6 @@ package com.fsl.questionnaire.util;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
@@ -19,7 +18,6 @@ import com.fsl.questionnaire.config.Constant;
 import com.fsl.questionnaire.config.URLConstant;
 import com.fsl.questionnaire.dto.QuestionnaireRecord;
 import com.fsl.questionnaire.mapper.QuestionnaireRecordMapper;
-import com.google.gson.Gson;
 import com.taobao.api.ApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,9 +86,7 @@ public class MessageUtil {
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
-        Gson gson = new Gson();
-        Map map = gson.fromJson(rsp.getBody(), Map.class);
-        return map.get("record_id").toString();
+        return rsp==null?null:rsp.getRecordId();
     }
 
     /**

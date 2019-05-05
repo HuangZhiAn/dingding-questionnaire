@@ -8,7 +8,6 @@ import com.fsl.questionnaire.dto.User;
 import com.fsl.questionnaire.mapper.QuestionnaireRecordMapper;
 import com.fsl.questionnaire.util.MemberListUtil;
 import com.fsl.questionnaire.util.MessageUtil;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -33,11 +32,9 @@ public class QuestionnaireRecordController {
 
     @PostMapping(value = "/saveData")
     @ResponseBody
-    public String saveData(@RequestBody String data) {
-        System.out.println(data);
+    public String saveData(@RequestBody Map map) {
+        System.out.println(map);
         String pId;
-        Gson gson = new Gson();
-        Map map = gson.fromJson(data, Map.class);
         pId = (String) map.get("pId");
         QuestionnaireRecord questionnaireRecord = new QuestionnaireRecord();
         if (pId == null || "".equals(pId)) {

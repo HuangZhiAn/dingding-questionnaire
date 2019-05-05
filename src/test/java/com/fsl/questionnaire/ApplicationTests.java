@@ -2,6 +2,7 @@ package com.fsl.questionnaire;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -45,25 +46,17 @@ public class ApplicationTests {
         Map<User, Object> objectObjectHashMap = new HashMap<>(3);
         System.out.println(objectObjectHashMap);
 
-        //大于指定容量的最小的2的n次方
-        int n = 3 - 1;
-        //位移或操作，让最高位以下的都变成1
-        n |= n >>> 1;
-        n |= n >>> 2;
-        n |= n >>> 4;
-        n |= n >>> 8;
-        n |= n >>> 16;
-        int init = (n < 0) ? 1 : (n >= 102400) ? 102400 : n + 1;
-         System.out.println(init);
+        new HashMap<>();
+        new Hashtable<>();
     }
 
     @Test
     public void sendMessageToUser() {
         //MessageUtil.sendMessageToUser("061343005926696347","林锦洪",urlPrefix,questionnaireRecordMapper);
-        //MessageUtil.sendMessageToUser("123061175039842902", "黄志安",urlPrefix,questionnaireRecordMapper);
+        MessageUtil.sendMessageToUser("123061175039842902", "黄志安",urlPrefix,questionnaireRecordMapper);
         //MessageUtil.sendMessageToUser("025714173126259030", "柴部",urlPrefix,questionnaireRecordMapper);
         //sendMessageToUser("014575","卢科");
-        MessageUtil.sendMessage("123061175039842902","http://ddq.fslgz.com:8020/tt.html?pId=", "钉钉办公协同工具使用问卷调查",LocalDateTime.now().toString()+"\nIE无法提交问题已修复");
+        //MessageUtil.sendMessage("123061175039842902","http://ddq.fslgz.com:8020/tt.html?pId=", "钉钉办公协同工具使用问卷调查",LocalDateTime.now().toString()+"\nIE无法提交问题已修复");
     }
 
     /**
@@ -169,5 +162,24 @@ public class ApplicationTests {
         }
     }
 
+    @Value("${send.message.url}")
+    private String url;
 
+    private String title="钉钉办公协同工具使用问卷调查";
+
+    @Test
+    public void sendMessageScheduled(){
+        List<QuestionnaireRecord> questionnaireRecords = questionnaireRecordMapper.selectUncompleteRecord();
+
+        //System.out.println(questionnaireRecords.size() + " aaaadfasdfasdfasdfas");
+
+        //MessageUtil.sendMessage("014575",url+questionnaireRecords.get(0).getId(),title,LocalDateTime.now().toString());
+
+        for (QuestionnaireRecord r:questionnaireRecords) {
+
+            MessageUtil.sendMessage(r.getUserId(),url+r.getId(),title,LocalDateTime.now().toString());
+            questionnaireRecordMapper.increaseSendMessageCount(r.getId());
+        }
+
+    }
 }
